@@ -1,5 +1,5 @@
 name: Parse openai yaml schema
-on: push
+##on: push
 jobs:
   test-yaml-reader:
     runs-on: ubuntu-latest
