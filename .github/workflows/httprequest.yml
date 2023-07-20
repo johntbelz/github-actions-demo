@@ -13,10 +13,10 @@ jobs:
             id: find-one 
             uses: fjogeleit/http-request-action@v1
             with:
-                url: 'https://data.mongodb-api.com/app/data-qbtmk/endpoint/data/v1/action/findOne'
+                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/findOne'
                 method: 'POST'
                 customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_FISERV_DEVSTUDIO }}"}'
-                data: '{ "collection":"evault", "database":"fiserv", "dataSource":"sandbox", "projection": {"_id": 0}}'
+                data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster"}'
         -   name: Show Response
             run: |
                 echo 'response: ${{ steps.find-one.outputs.response }}'
