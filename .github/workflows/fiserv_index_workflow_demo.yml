@@ -6,8 +6,8 @@ name: fiserv index workflow
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "master", "dev", "stage", "prod" ]
+  ##push:
+    ##branches: [ "master", "dev", "stage", "prod" ]
   # pull_request:
   #  branches: [ "master" ]
 
