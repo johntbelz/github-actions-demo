@@ -7,10 +7,10 @@ jobs:
     prepare-response:
         runs-on: ubuntu-latest
         outputs:
-            response-made: ${{ steps.find-one.outputs.response}}
+            response-made: ${{ steps.update-one.outputs.response}}
         steps:
-        -   name: Find one
-            id: find-one 
+        -   name: Update one
+            id: update-one 
             uses: fjogeleit/http-request-action@v1
             with:
                 url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/findOne'
@@ -19,9 +19,9 @@ jobs:
                 data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": {"name": "John"} , "update": {"$set": {"test": "this field has been updated by Github actions"}, "upsert": true }'
         -   name: Show Response
             run: |
-                echo 'response: ${{ steps.find-one.outputs.response }}'
-                echo 'header: ${{ steps.find-one.outputs.headers }}'
-                echo 'email2: ${{ fromJson(steps.find-one.outputs.response).document.email}}'
+                echo 'response: ${{ steps.update-one.outputs.response }}'
+                echo 'header: ${{ steps.update-one.outputs.headers }}'
+                echo 'email2: ${{ fromJson(steps.update-one.outputs.response).document.email}}'
 
     # confirm-response:
     #     needs: prepare-response
