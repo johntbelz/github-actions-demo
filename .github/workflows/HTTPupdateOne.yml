@@ -1,7 +1,7 @@
 name: Atlas POST via http request
 on:
-    push:
-        branches: [ "master", "app1", "app2", "app3" ]
+    ##push:
+        ##branches: [ "master", "app1", "app2", "app3" ]
     workflow_dispatch:
 jobs:
     prepare-response:
