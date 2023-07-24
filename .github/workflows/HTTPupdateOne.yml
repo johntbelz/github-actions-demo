@@ -13,7 +13,7 @@ jobs:
             id: update-one 
             uses: fjogeleit/http-request-action@v1
             with:
-                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/findOne'
+                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/updateOne'
                 method: 'POST'
                 customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
                 data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "name": "John" }, "update": {"$set": {"test": "Updated with Github actions"}} }'
