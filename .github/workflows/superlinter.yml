@@ -1,5 +1,6 @@
 name: Super-Linter
-on: push
+##on: push
+on: workflow_dispatch
 jobs:
     super-lint:
         name: Lint code base
