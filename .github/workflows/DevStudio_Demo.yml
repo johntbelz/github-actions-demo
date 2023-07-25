@@ -67,9 +67,19 @@ jobs:
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
         
+      - name: Run converter
+        uses: fabasoad/data-format-converter-action@main
+        id: yaml2json
+        with:
+          input: "${{ matrix.file }}"
+          from: "yaml"
+          to: "json"
+      - name: Print result
+        run: echo "${{ steps.yaml2json.outputs.output }}"        
+        
       - name: Read file
         run: |
-          var=$(cat ${{ matrix.file }})  
+          var=$(cat ${{ steps.yaml2json.outputs.output }})  
           echo "$var"
           
       - name: Write to Atlas
