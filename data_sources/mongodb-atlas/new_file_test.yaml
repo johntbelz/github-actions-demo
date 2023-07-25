@@ -1,0 +1,5 @@
+Test: document
+Name: John
+  Embedded_fields:
+    new: field
+    newer: field
