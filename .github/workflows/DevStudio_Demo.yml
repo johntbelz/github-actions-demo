@@ -12,9 +12,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Steps
-  # Checkout File that was pushed
-  # Convert file from YAML to JSON
+  # Prepare data about added and modified files using the file-changes-action: https://github.com/marketplace/actions/file-changes-action
   prepare-files:
     runs-on: ubuntu-latest
     outputs:
@@ -23,7 +21,7 @@ jobs:
     steps:
       - id: file-changes
         uses: trilom/file-changes-action@v1.2.4
-
+  # File added
   post-files-added:
     needs: prepare-files
     runs-on: ubuntu-latest
@@ -38,7 +36,7 @@ jobs:
         run: |
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
-        
+   # Convert yaml to JSON using data-format-converter-action: https://github.com/marketplace/actions/data-format-converter-action     
       - name: Run converter
         uses: fabasoad/data-format-converter-action@main
         id: yaml2json
@@ -48,23 +46,7 @@ jobs:
           to: "json"
       - name: Print result
         run: echo "${{ steps.yaml2json.outputs.output }}"
-            # var=$(cat ${{ steps.yaml2json.outputs.output }})  
-             #echo "$var"
-  
-      #- name: Read file contents
-       # id: read_file
-        #uses: andstor/file-reader-action@v1
-        #with:
-         # path: "${{ steps.yaml2json.outputs.output }}"
-
-      #- name: Print file contents
-       # run: echo "${{ steps.read_file.outputs.contents }}"
-
-     # - name: Read file
-        #run: |
-         # var=$(cat ${{ steps.yaml2json.outputs.output }})  
-          #echo "$var"
-          
+    # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action   
       - name: Write to Atlas
         uses: fjogeleit/http-request-action@v1
         with:
@@ -72,7 +54,8 @@ jobs:
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
           data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": ${{ steps.yaml2json.outputs.output }} }'
-      
+          
+  # File modified    
   post-files-updated:
     needs: prepare-files
     runs-on: ubuntu-latest
@@ -87,7 +70,7 @@ jobs:
         run: |
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
-        
+   # Convert yaml to JSON using data-format-converter-action: https://github.com/marketplace/actions/data-format-converter-action     
       - name: Run converter
         uses: fabasoad/data-format-converter-action@main
         id: yaml2json
@@ -97,23 +80,7 @@ jobs:
           to: "json"
       - name: Print result
         run: echo "${{ steps.yaml2json.outputs.output }}"
-             #var=$(cat ${{ steps.yaml2json.outputs.output }})  
-             #echo "$var"
-
-     # - name: Read file contents
-      #  id: read_file
-       # uses: andstor/file-reader-action@v1
-        #with:
-         # path: "${{ steps.yaml2json.outputs.output }}"
-
-    #  - name: Print file contents
-     #   run: echo "${{ steps.read_file.outputs.contents }}"
-
-     # - name: Read file
-        #run: |
-          #var=$(cat ${{ steps.yaml2json.outputs.output }})  
-          #echo "$var"
-          
+    # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action  
       - name: Write to Atlas
         uses: fjogeleit/http-request-action@v1
         with:
@@ -144,7 +111,7 @@ jobs:
                 #echo 'response: ${{ steps.insert-one.outputs.response }}'
                 #echo 'header: ${{ steps.insert-one.outputs.headers }}'
                 #echo 'email2: ${{ fromJson(steps.insert-one.outputs.response).document.email}}'
-                
+####### Unused blockes##############                
                 
     # file run action for potential use
    #file_contents:
@@ -162,3 +129,20 @@ jobs:
 
      # - name: File contents
       #  run: echo "${ steps.read_file.outputs.contents }"
+      
+             #var=$(cat ${{ steps.yaml2json.outputs.output }})  
+             #echo "$var"
+
+     # - name: Read file contents
+      #  id: read_file
+       # uses: andstor/file-reader-action@v1
+        #with:
+         # path: "${{ steps.yaml2json.outputs.output }}"
+
+    #  - name: Print file contents
+     #   run: echo "${{ steps.read_file.outputs.contents }}"
+
+     # - name: Read file
+        #run: |
+          #var=$(cat ${{ steps.yaml2json.outputs.output }})  
+          #echo "$var"
