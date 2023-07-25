@@ -38,21 +38,6 @@ jobs:
         run: |
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
-  file_contents:
-    needs: post-files-added
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-        
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "${{ github.workspace }}/${{ matrix.file }}"
-
-      - name: File contents
-        run: echo "${ steps.read_file.outputs.contents }"
   
   # Upsert JSON file to MongoDB using Data API
   #prepare-response:
@@ -76,3 +61,21 @@ jobs:
                 #echo 'response: ${{ steps.insert-one.outputs.response }}'
                 #echo 'header: ${{ steps.insert-one.outputs.headers }}'
                 #echo 'email2: ${{ fromJson(steps.insert-one.outputs.response).document.email}}'
+                
+                
+    # file run action for potential use
+   #file_contents:
+    #needs: post-files-added
+    #runs-on: ubuntu-latest
+    #steps:
+     # - name: Checkout code
+      #  uses: actions/checkout@v1
+        
+      #- name: Read file contents
+       # id: read_file
+        #uses: andstor/file-reader-action@v1
+        #with:
+         # path: "${{ github.workspace }}/${{ matrix.file }}"
+
+     # - name: File contents
+      #  run: echo "${ steps.read_file.outputs.contents }"
