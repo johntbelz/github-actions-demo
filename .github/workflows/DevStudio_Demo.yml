@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DevStudio_Demo
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  #push:
+    #branches: [ "master" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Steps
+  # Checkout File that was pushed
+  # Convert file from YAML to JSON
+  prepare-files:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix-added: ${{ steps.file-changes.outputs.files_added }}
+      matrix-modified: ${{ steps.file-changes.outputs.files_modified }}
+    steps:
+      - id: file-changes
+        uses: trilom/file-changes-action@v1.2.4
+
+  post-files-added:
+    needs: prepare-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJSON(needs.prepare-files.outputs.matrix-added) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Echo file
+        run: |
+          echo ${{ matrix.file }} 
+        # to test if the correct file was passed
+  # Upsert JSON file to MongoDB using Data API
+  prepare-response:
+        runs-on: ubuntu-latest
+        outputs:
+            response-made: ${{ steps.update-one.outputs.response}}
+        steps:
+        -   name: Update one
+            id: update-one 
+            uses: fjogeleit/http-request-action@v1
+            with:
+                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/updateOne'
+                method: 'POST'
+                file: "${{ github.workspace }}/${{ matrix.file }}"
+                #customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+                #data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "name": "John_new" }, "update": {"$set": {"test": "Upserted with Github actions"}}, "upsert": true }'
+        -   name: Show Response
+            run: |
+                echo 'response: ${{ steps.update-one.outputs.response }}'
+                echo 'header: ${{ steps.update-one.outputs.headers }}'
+                echo 'email2: ${{ fromJson(steps.update-one.outputs.response).document.email}}'
