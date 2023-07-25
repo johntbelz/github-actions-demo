@@ -43,13 +43,13 @@ jobs:
         needs: post-files-added
         runs-on: ubuntu-latest
         outputs:
-            response-made: ${{ steps.update-one.outputs.response}}
+            response-made: ${{ steps.insert-one.outputs.response}}
         steps:
-        -   name: Update one
-            id: update-one 
+        -   name: Insert one
+            id: insert-one 
             uses: fjogeleit/http-request-action@v1
             with:
-                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/updateOne'
+                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
                 method: 'POST'
                 customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
                 data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster"}'
@@ -57,6 +57,6 @@ jobs:
                 #, "filter": { "name": "John_new" }, "update": {"$set": {"test": "Upserted with Github actions"}}, "upsert": true }'
         -   name: Show Response
             run: |
-                echo 'response: ${{ steps.update-one.outputs.response }}'
-                echo 'header: ${{ steps.update-one.outputs.headers }}'
-                echo 'email2: ${{ fromJson(steps.update-one.outputs.response).document.email}}'
+                echo 'response: ${{ steps.insert-one.outputs.response }}'
+                echo 'header: ${{ steps.insert-one.outputs.headers }}'
+                echo 'email2: ${{ fromJson(steps.insert-one.outputs.response).document.email}}'
