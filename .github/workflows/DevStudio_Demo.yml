@@ -48,8 +48,8 @@ jobs:
           to: "json"
       - name: Print result
         run: echo "${{ steps.yaml2json.outputs.output }}"
-             var=$(cat ${{ steps.yaml2json.outputs.output }})  
-             echo "$var"
+            # var=$(cat ${{ steps.yaml2json.outputs.output }})  
+             #echo "$var"
   
       #- name: Read file contents
        # id: read_file
@@ -97,8 +97,8 @@ jobs:
           to: "json"
       - name: Print result
         run: echo "${{ steps.yaml2json.outputs.output }}"
-             var=$(cat ${{ steps.yaml2json.outputs.output }})  
-             echo "$var"
+             #var=$(cat ${{ steps.yaml2json.outputs.output }})  
+             #echo "$var"
 
      # - name: Read file contents
       #  id: read_file
