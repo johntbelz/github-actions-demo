@@ -47,7 +47,7 @@ jobs:
           from: "yaml"
           to: "json"
       - name: Print result
-        run: echo "${ steps.yaml2json.outputs.output }"
+        run: echo "${{ steps.yaml2json.outputs.output }}"
             # var=$(cat ${{ steps.yaml2json.outputs.output }})  
              #echo "$var"
   
@@ -71,7 +71,7 @@ jobs:
           url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
-          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "$var" }'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "${{ steps.yaml2json.outputs.output }}" }'
       
   post-files-updated:
     needs: prepare-files
@@ -96,7 +96,7 @@ jobs:
           from: "yaml"
           to: "json"
       - name: Print result
-        run: echo "${ steps.yaml2json.outputs.output }"
+        run: echo "${{ steps.yaml2json.outputs.output }}"
              #var=$(cat ${{ steps.yaml2json.outputs.output }})  
              #echo "$var"
 
@@ -120,7 +120,7 @@ jobs:
           url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
-          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "$var" }'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "${{ steps.yaml2json.outputs.output }}" }'
   
   # Upsert JSON file to MongoDB using Data API
   #prepare-response:
