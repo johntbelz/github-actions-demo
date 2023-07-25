@@ -39,10 +39,29 @@ jobs:
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
         
-      - name: Read file
-        run: |
-          var=$(cat ${{ matrix.file }})
-          echo "$var"
+      - name: Run converter
+        uses: fabasoad/data-format-converter-action@main
+        id: yaml2json
+        with:
+          input: "${{ matrix.file }}"
+          from: "yaml"
+          to: "json"
+      - name: Print result
+        run: echo "${{ steps.yaml2json.outputs.output }}"
+  
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "${{ steps.yaml2json.outputs.output }}"
+
+      - name: Print file contents
+        run: echo "${ steps.read_file.outputs.contents }"
+
+     # - name: Read file
+        #run: |
+         # var=$(cat ${{ steps.yaml2json.outputs.output }})  
+          #echo "$var"
           
       - name: Write to Atlas
         uses: fjogeleit/http-request-action@v1
@@ -76,11 +95,20 @@ jobs:
           to: "json"
       - name: Print result
         run: echo "${{ steps.yaml2json.outputs.output }}"        
-        
-      - name: Read file
-        run: |
-          var=$(cat ${{ steps.yaml2json.outputs.output }})  
-          echo "$var"
+
+      - name: Read file contents
+        id: read_file
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "${{ steps.yaml2json.outputs.output }}"
+
+      - name: Print file contents
+        run: echo "${ steps.read_file.outputs.contents }"
+
+     # - name: Read file
+        #run: |
+          #var=$(cat ${{ steps.yaml2json.outputs.output }})  
+          #echo "$var"
           
       - name: Write to Atlas
         uses: fjogeleit/http-request-action@v1
