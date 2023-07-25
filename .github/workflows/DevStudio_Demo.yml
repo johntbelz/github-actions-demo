@@ -61,7 +61,7 @@ jobs:
         
       - name: Read file
         run: |
-          echo cat ${{ matrix.file }} 
+          cat ${{ matrix.file }} 
   
   # Upsert JSON file to MongoDB using Data API
   #prepare-response:
