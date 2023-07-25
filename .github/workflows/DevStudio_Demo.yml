@@ -48,15 +48,17 @@ jobs:
           to: "json"
       - name: Print result
         run: echo "${{ steps.yaml2json.outputs.output }}"
+             var=$(cat ${{ steps.yaml2json.outputs.output }})  
+             echo "$var"
   
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "${{ steps.yaml2json.outputs.output }}"
+      #- name: Read file contents
+       # id: read_file
+        #uses: andstor/file-reader-action@v1
+        #with:
+         # path: "${{ steps.yaml2json.outputs.output }}"
 
-      - name: Print file contents
-        run: echo "${{ steps.read_file.outputs.contents }}"
+      #- name: Print file contents
+       # run: echo "${{ steps.read_file.outputs.contents }}"
 
      # - name: Read file
         #run: |
@@ -94,16 +96,18 @@ jobs:
           from: "yaml"
           to: "json"
       - name: Print result
-        run: echo "${{ steps.yaml2json.outputs.output }}"        
+        run: echo "${{ steps.yaml2json.outputs.output }}"
+             var=$(cat ${{ steps.yaml2json.outputs.output }})  
+             echo "$var"
 
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "${{ steps.yaml2json.outputs.output }}"
+     # - name: Read file contents
+      #  id: read_file
+       # uses: andstor/file-reader-action@v1
+        #with:
+         # path: "${{ steps.yaml2json.outputs.output }}"
 
-      - name: Print file contents
-        run: echo "${{ steps.read_file.outputs.contents }}"
+    #  - name: Print file contents
+     #   run: echo "${{ steps.read_file.outputs.contents }}"
 
      # - name: Read file
         #run: |
