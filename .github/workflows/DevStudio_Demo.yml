@@ -56,7 +56,7 @@ jobs:
           path: "${{ steps.yaml2json.outputs.output }}"
 
       - name: Print file contents
-        run: echo "${ steps.read_file.outputs.contents }"
+        run: echo "${{ steps.read_file.outputs.contents }}"
 
      # - name: Read file
         #run: |
@@ -103,7 +103,7 @@ jobs:
           path: "${{ steps.yaml2json.outputs.output }}"
 
       - name: Print file contents
-        run: echo "${ steps.read_file.outputs.contents }"
+        run: echo "${{ steps.read_file.outputs.contents }}"
 
      # - name: Read file
         #run: |
