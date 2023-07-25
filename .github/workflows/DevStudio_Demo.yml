@@ -43,8 +43,15 @@ jobs:
         run: |
           var=$(cat ${{ matrix.file }})
           echo "$var"
+          
+      - name: Write to Atlas
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "$var" }'
       
-  
   post-files-updated:
     needs: prepare-files
     runs-on: ubuntu-latest
@@ -64,6 +71,14 @@ jobs:
         run: |
           var=$(cat ${{ matrix.file }})  
           echo "$var"
+          
+      - name: Write to Atlas
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "$var" }'
   
   # Upsert JSON file to MongoDB using Data API
   #prepare-response:
