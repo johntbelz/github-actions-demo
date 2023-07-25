@@ -41,7 +41,8 @@ jobs:
         
       - name: Read file
         run: |
-          echo cat ${{ matrix.file }} 
+          var=$(cat ${{ matrix.file }})
+          echo "$var"
       
   
   post-files-updated:
@@ -61,7 +62,8 @@ jobs:
         
       - name: Read file
         run: |
-          cat ${{ matrix.file }} 
+          var=$(cat ${{ matrix.file }})  
+          echo "$var"
   
   # Upsert JSON file to MongoDB using Data API
   #prepare-response:
