@@ -1,0 +1,148 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DevStudio_Demo
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Prepare data about added and modified files using the file-changes-action: https://github.com/marketplace/actions/file-changes-action
+  prepare-files:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix-added: ${{ steps.file-changes.outputs.files_added }}
+      matrix-modified: ${{ steps.file-changes.outputs.files_modified }}
+    steps:
+      - id: file-changes
+        uses: trilom/file-changes-action@v1.2.4
+  # File added
+  post-files-added:
+    needs: prepare-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJSON(needs.prepare-files.outputs.matrix-added) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Echo file
+        run: |
+          echo ${{ matrix.file }} 
+        # to test if the correct file was passed
+   # Convert yaml to JSON using data-format-converter-action: https://github.com/marketplace/actions/data-format-converter-action     
+      - name: Run converter
+        uses: fabasoad/data-format-converter-action@main
+        id: yaml2json
+        with:
+          input: "${{ matrix.file }}"
+          from: "yaml"
+          to: "json"
+      - name: Print result
+        run: echo "${{ steps.yaml2json.outputs.output }}"
+    # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action   
+      - name: Write to Atlas
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": ${{ steps.yaml2json.outputs.output }} }'
+          
+  # File modified    
+  post-files-updated:
+    needs: prepare-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJSON(needs.prepare-files.outputs.matrix-modified) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Echo file
+        run: |
+          echo ${{ matrix.file }} 
+        # to test if the correct file was passed
+   # Convert yaml to JSON using data-format-converter-action: https://github.com/marketplace/actions/data-format-converter-action     
+      - name: Run converter
+        uses: fabasoad/data-format-converter-action@main
+        id: yaml2json
+        with:
+          input: "${{ matrix.file }}"
+          from: "yaml"
+          to: "json"
+      - name: Print result
+        run: echo "${{ steps.yaml2json.outputs.output }}"
+    # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action  
+      - name: Write to Atlas
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": ${{ steps.yaml2json.outputs.output }} }'
+  
+  # Upsert JSON file to MongoDB using Data API
+  #prepare-response:
+        #needs: post-files-added
+        #runs-on: ubuntu-latest
+        #outputs:
+            #response-made: ${{ steps.insert-one.outputs.response}}
+        #steps:
+        #-   name: Insert one
+            #id: insert-one 
+            #uses: fjogeleit/http-request-action@v1
+           # with:
+               #url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+                #method: 'POST'
+                #customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+                #data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "${{ github.workspace }}/${{ read_file.contents }}" }'
+                #file: "${{ github.workspace }}/${{ read_file.contents }}"
+                #, "filter": { "name": "John_new" }, "update": {"$set": {"test": "Upserted with Github actions"}}, "upsert": true }'
+       # -   name: Show Response
+            #run: |
+                #echo 'response: ${{ steps.insert-one.outputs.response }}'
+                #echo 'header: ${{ steps.insert-one.outputs.headers }}'
+                #echo 'email2: ${{ fromJson(steps.insert-one.outputs.response).document.email}}'
+####### Unused blockes##############                
+                
+    # file run action for potential use
+   #file_contents:
+    #needs: post-files-added
+    #runs-on: ubuntu-latest
+    #steps:
+     # - name: Checkout code
+      #  uses: actions/checkout@v1
+        
+      #- name: Read file contents
+       # id: read_file
+        #uses: andstor/file-reader-action@v1
+        #with:
+         # path: "${{ github.workspace }}/${{ matrix.file }}"
+
+     # - name: File contents
+      #  run: echo "${ steps.read_file.outputs.contents }"
+      
+             #var=$(cat ${{ steps.yaml2json.outputs.output }})  
+             #echo "$var"
+
+     # - name: Read file contents
+      #  id: read_file
+       # uses: andstor/file-reader-action@v1
+        #with:
+         # path: "${{ steps.yaml2json.outputs.output }}"
+
+    #  - name: Print file contents
+     #   run: echo "${{ steps.read_file.outputs.contents }}"
+
+     # - name: Read file
+        #run: |
+          #var=$(cat ${{ steps.yaml2json.outputs.output }})  
+          #echo "$var"
