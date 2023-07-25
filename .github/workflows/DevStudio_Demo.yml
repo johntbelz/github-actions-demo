@@ -38,6 +38,11 @@ jobs:
         run: |
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
+        
+      - name: Read file
+        run: |
+          echo cat ${{ matrix.file }} 
+      
   
   post-files-updated:
     needs: prepare-files
@@ -53,6 +58,10 @@ jobs:
         run: |
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
+        
+      - name: Read file
+        run: |
+          echo cat ${{ matrix.file }} 
   
   # Upsert JSON file to MongoDB using Data API
   #prepare-response:
