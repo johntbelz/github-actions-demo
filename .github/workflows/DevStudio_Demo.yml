@@ -49,24 +49,24 @@ jobs:
         run: echo "${ steps.read_file.outputs.contents }"
   
   # Upsert JSON file to MongoDB using Data API
-  prepare-response:
-        needs: post-files-added
-        runs-on: ubuntu-latest
-        outputs:
-            response-made: ${{ steps.insert-one.outputs.response}}
-        steps:
-        -   name: Insert one
-            id: insert-one 
-            uses: fjogeleit/http-request-action@v1
-            with:
-                url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
-                method: 'POST'
-                customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
-                data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "${{ github.workspace }}/${{ read_file.contents }}" }'
+  #prepare-response:
+        #needs: post-files-added
+        #runs-on: ubuntu-latest
+        #outputs:
+            #response-made: ${{ steps.insert-one.outputs.response}}
+        #steps:
+        #-   name: Insert one
+            #id: insert-one 
+            #uses: fjogeleit/http-request-action@v1
+           # with:
+               #url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+                #method: 'POST'
+                #customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+                #data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": "${{ github.workspace }}/${{ read_file.contents }}" }'
                 #file: "${{ github.workspace }}/${{ read_file.contents }}"
                 #, "filter": { "name": "John_new" }, "update": {"$set": {"test": "Upserted with Github actions"}}, "upsert": true }'
-        -   name: Show Response
-            run: |
-                echo 'response: ${{ steps.insert-one.outputs.response }}'
-                echo 'header: ${{ steps.insert-one.outputs.headers }}'
-                echo 'email2: ${{ fromJson(steps.insert-one.outputs.response).document.email}}'
+       # -   name: Show Response
+            #run: |
+                #echo 'response: ${{ steps.insert-one.outputs.response }}'
+                #echo 'header: ${{ steps.insert-one.outputs.headers }}'
+                #echo 'email2: ${{ fromJson(steps.insert-one.outputs.response).document.email}}'
