@@ -47,7 +47,7 @@ jobs:
           from: "yaml"
           to: "json"
       - name: Print result
-        run: echo "${{ steps.yaml2json.outputs.output }}"
+        run: echo "${ steps.yaml2json.outputs.output }"
             # var=$(cat ${{ steps.yaml2json.outputs.output }})  
              #echo "$var"
   
@@ -96,7 +96,7 @@ jobs:
           from: "yaml"
           to: "json"
       - name: Print result
-        run: echo "${{ steps.yaml2json.outputs.output }}"
+        run: echo "${ steps.yaml2json.outputs.output }"
              #var=$(cat ${{ steps.yaml2json.outputs.output }})  
              #echo "$var"
 
