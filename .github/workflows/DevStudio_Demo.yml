@@ -38,6 +38,12 @@ jobs:
         run: |
           echo ${{ matrix.file }} 
         # to test if the correct file was passed
+  file_contents:
+    needs: post-files-added
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
         
       - name: Read file contents
         id: read_file
