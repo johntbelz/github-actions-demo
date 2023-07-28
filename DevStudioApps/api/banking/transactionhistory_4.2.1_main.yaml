@@ -1,0 +1,37 @@
+service_id: 
+    F8390098
+key: 
+    DevStudioApps/api/banking/transactionhistory_4.2.1_main.yaml
+version: 
+    4.2.1,
+name: 
+    TransactionHistory
+api_description: 
+    Fetch transaction history based on specified parameters.
+path: 
+    DevStudioApps/api/banking/transactionhistory_4.2.1_main.yaml
+parameters:
+    institution_nm: bank_name
+    institution_id: 548984204593
+    party_nm: customer_name
+    acct_nm: 202942
+    cct_type: checking
+    txn_hist_months: 4
+responses:
+    100:
+        description: posted successfully
+        content:
+            header: application/json
+            message: full_transaction_document
+    200:
+        description: posted with errors
+        error_cd: 534634
+        content:
+            header: application/json
+            message: full_transaction_document
+    400:
+        description: post failure
+        error_cd: 324524
+        content:
+            header: application/json
+            message: full_transaction_document
