@@ -10,8 +10,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 #declare environment variable for key used in upsert  
-env:
-  KEY: tenant_name_path_type_version_branch
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # Prepare data about added and modified files using the file-changes-action: https://github.com/marketplace/actions/file-changes-action
@@ -89,4 +87,4 @@ jobs:
           url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/updateOne'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
-          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "key": ${{ matrix.file }} }, "update": ${{ steps.yaml2json.outputs.output }}, "upsert": true }'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "key": "${{ matrix.file }}" }, "update": ${{ steps.yaml2json.outputs.output }}, "upsert": true }'
