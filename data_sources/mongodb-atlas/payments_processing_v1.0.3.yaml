@@ -1,5 +1,5 @@
 service_id: 
-    A103BG56
+    A103BG56_new
 key: 
     paymentsprocessing_home/apps/banking/api/paymentsprocessing_1.0.3_main
 version: 
@@ -19,26 +19,20 @@ parameters:
     txn_cd: A
     txn_ddt: 2022-12-01T00:00:00.000+00:00
 responses:
-    code: 100
-    description: 
-        posted successfully
-    content:
-        header: application/json
-        message: 
-            full_transaction_document
-    code: 200
-    description: 
-        posted with errors
-    error_cd: 534634
-    content:
-        header: application/json
-        message: 
-            full_transaction_document
-    code: 400
-    description: 
-        post failure
-    error_cd: 324524
-    content:
-        header: application/json
-        message: 
-            full_transaction_document
+    100:
+        description: posted successfully
+        content:
+            header: application/json
+            message: full_transaction_document
+    200:
+        description: posted with errors
+        error_cd: 534634
+        content:
+            header: application/json
+            message: full_transaction_document
+    400:
+        description: post failure
+        error_cd: 324524
+        content:
+            header: application/json
+            message: full_transaction_document
