@@ -1,0 +1,92 @@
+# This is a basic workflow to help you get started with Actions
+
+name: DevStudio_Demo_upsert
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+#declare environment variable for key used in upsert  
+env:
+  KEY: tenant_name_path_type_version_branch
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Prepare data about added and modified files using the file-changes-action: https://github.com/marketplace/actions/file-changes-action
+  prepare-files:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix-added: ${{ steps.file-changes.outputs.files_added }}
+      matrix-modified: ${{ steps.file-changes.outputs.files_modified }}
+    steps:
+      - id: file-changes
+        uses: trilom/file-changes-action@v1.2.4
+  # File added
+  post-files-added:
+    needs: prepare-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJSON(needs.prepare-files.outputs.matrix-added) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Echo file
+        run: |
+          echo ${{ matrix.file }} 
+        # to test if the correct file was passed
+   # Convert yaml to JSON using data-format-converter-action: https://github.com/marketplace/actions/data-format-converter-action     
+      - name: Run converter
+        uses: fabasoad/data-format-converter-action@main
+        id: yaml2json
+        with:
+          input: "${{ matrix.file }}"
+          from: "yaml"
+          to: "json"
+      - name: Print result
+        run: echo "${{ steps.yaml2json.outputs.output }}"
+    # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action   
+      - name: Write to Atlas
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/insertOne'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": ${{ steps.yaml2json.outputs.output }} }'
+          
+  # File modified    
+  post-files-updated:
+    needs: prepare-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJSON(needs.prepare-files.outputs.matrix-modified) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Echo file
+        run: |
+          echo ${{ matrix.file }} 
+        # to test if the correct file was passed
+   # Convert yaml to JSON using data-format-converter-action: https://github.com/marketplace/actions/data-format-converter-action     
+      - name: Run converter
+        uses: fabasoad/data-format-converter-action@main
+        id: yaml2json
+        with:
+          input: "${{ matrix.file }}"
+          from: "yaml"
+          to: "json"
+      - name: Print result
+        run: echo "${{ steps.yaml2json.outputs.output }}"
+    # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action  
+      - name: Write to Atlas
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/updateOne'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "document": ${{ steps.yaml2json.outputs.output }} }'
