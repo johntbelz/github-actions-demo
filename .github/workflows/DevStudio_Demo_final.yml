@@ -89,4 +89,4 @@ jobs:
           url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/updateOne'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
-          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "key": "paymentsprocessing_DevStudioApps/api/banking/paymentsprocessing_1.0.3_main.yaml" }, "update": ${{ steps.yaml2json.outputs.output }}, "upsert": true }'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "key": ${{ matrix.file }} }, "update": ${{ steps.yaml2json.outputs.output }}, "upsert": true }'
