@@ -1,7 +1,7 @@
 service_id: 
     C0192846
 key: 
-    addaccount_DevStudioApps/api/banking/addaccount_10.0.1_main.yaml
+    DevStudioApps/api/banking/addaccount_10.0.1_main.yaml
 version: 
     10.0.1,
 name: 
