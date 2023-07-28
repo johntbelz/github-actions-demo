@@ -1,7 +1,7 @@
 service_id: 
     C0192846
 key: 
-    DevStudioApps/api/banking/addaccount_10.0.1_main.yaml
+    DevStudioApps/api/banking/addaccount_main.yaml
 version: 
     10.0.1,
 name: 
@@ -9,7 +9,7 @@ name:
 api_description: 
     Adds a new account to the banking institution of your choice.
 path: 
-    DevStudioApps/api/banking/addaccount_10.0.1_main.yaml
+    DevStudioApps/api/banking/addaccount_main.yaml
 parameters:
     institution_nm: bank_name
     institution_id: 00494
