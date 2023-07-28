@@ -84,11 +84,9 @@ jobs:
         run: echo "${{ steps.yaml2json.outputs.output }}"
     # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action  
       - name: Write to Atlas
-        env: 
-          key: ${{ matrix.file }} 
         uses: fjogeleit/http-request-action@v1
         with:
           url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/replaceOne'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "Access-Control-Request-Headers": "*", "api-key": "${{ secrets.ATLAS_GITHUB_ACTIONS }}"}'
-          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "key": $key }, "replacement": ${{ steps.yaml2json.outputs.output }}, "upsert": true }'
+          data: '{ "collection":"devstudio", "database":"fiserv", "dataSource":"demoCluster", "filter": { "key": "paymentsprocessing_home\apps\banking\api\paymentsprocessing_1.0.3_main" }, "replacement": ${{ steps.yaml2json.outputs.output }}, "upsert": true }'
