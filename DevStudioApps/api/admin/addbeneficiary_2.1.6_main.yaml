@@ -1,7 +1,7 @@
 service_id: 
     D7765410
 key: 
-    addbeneficiary_DevStudioApps/apps/admin/api/addbeneficiary_2.1.6_main.yaml
+    addbeneficiary_DevStudioApps/api/admin/addbeneficiary_2.1.6_main.yaml
 version: 
     2.1.6
 name: 
@@ -9,7 +9,7 @@ name:
 api_description: 
     Adds a new beneficiary to an account.
 path: 
-    DevStudioApps/apps/admin/api/addbeneficiary_2.1.6_main.yaml
+    DevStudioApps/api/admin/addbeneficiary_2.1.6_main.yaml
 parameters:
     institution_nm: issuing_institution
     institution_id: 039
