@@ -1,7 +1,7 @@
 service_id: 
     E0098365
 key: 
-    balancecheck_DevStudioApps/api/banking/balancecheck_0.0.1_main.yaml
+    DevStudioApps/api/banking/balancecheck_0.0.1_main.yaml
 version: 
     0.0.1
 name: 
