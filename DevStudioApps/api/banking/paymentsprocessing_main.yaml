@@ -1,7 +1,7 @@
 service_id: 
     A103BG56
 key: 
-    DevStudioApps/api/banking/paymentsprocessing_1.0.3_main.yaml
+    DevStudioApps/api/banking/paymentsprocessing_main.yaml
 version: 
     1.0.3
 name: 
@@ -9,7 +9,7 @@ name:
 api_description: 
     Provides logic to assist with processing and storing payments from the institutions of your choice.
 path: 
-    DevStudioApps/api/banking/paymentsprocessing_1.0.3_main.yaml
+    DevStudioApps/api/banking/paymentsprocessing_main.yaml
 parameters:
     party: payment_sender
     party_id: 10001
