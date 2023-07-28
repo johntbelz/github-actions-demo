@@ -1,11 +1,11 @@
 service_id: 
-    A103BG56_new
+    A103BG56
 key: 
     paymentsprocessing_home/apps/banking/api/paymentsprocessing_1.0.3_main
 version: 
     1.0.3,
 name: 
-    PaymentsProcessing,
+    PaymentsProcessing
 api_description: 
     Provides logic to assist with processing and storing payments from the institutions of your choice.
 path: 
