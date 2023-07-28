@@ -1,0 +1,42 @@
+service_id: 
+    C0192846
+key: 
+    addaccount_home\apps\banking\api\addaccount_10.0.1_main
+version: 
+    10.0.1,
+name: 
+    AddAccount
+api_description: 
+    Adds a new account to the banking institution of your choice.
+path: 
+    home/apps/banking/api/addaccount
+parameters:
+    institution_nm: bank_name
+    institution_id: 00494
+    party_nm: customer_name
+    party_acct_nm: 20384757
+    borrower_adr_str1: street
+    borrower_adr_str2: street
+    borrower_adr_city: city
+    borrower_adr_state: state
+    borrower_adr_country: country
+    new_acct_type: checking
+    origination_dt: 2022-12-01T00:00:00.000+00:00
+responses:
+    100:
+        description: posted successfully
+        content:
+            header: application/json
+            message: full_transaction_document
+    200:
+        description: posted with errors
+        error_cd: 534634
+        content:
+            header: application/json
+            message: full_transaction_document
+    400:
+        description: post failure
+        error_cd: 324524
+        content:
+            header: application/json
+            message: full_transaction_document
