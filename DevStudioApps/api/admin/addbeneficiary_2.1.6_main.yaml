@@ -1,7 +1,7 @@
 service_id: 
     D7765410
 key: 
-    addbeneficiary_DevStudioApps/api/admin/addbeneficiary_2.1.6_main.yaml
+    DevStudioApps/api/admin/addbeneficiary_2.1.6_main.yaml
 version: 
     2.1.6
 name: 
