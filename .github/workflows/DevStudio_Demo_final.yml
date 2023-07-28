@@ -85,7 +85,7 @@ jobs:
     # Pass JSON file contents to Atlas throguh Data API using http-request-action: https://github.com/marketplace/actions/http-request-action  
       - name: Write to Atlas
         env: 
-          key: ${{ matrix.file:13//.yaml }} 
+          key: ${{ matrix.file//.yaml }} 
         uses: fjogeleit/http-request-action@v1
         with:
           url: 'https://us-east-1.aws.data.mongodb-api.com/app/data-vlwcn/endpoint/data/v1/action/replaceOne'
