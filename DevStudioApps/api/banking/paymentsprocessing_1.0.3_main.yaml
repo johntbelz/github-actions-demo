@@ -1,7 +1,7 @@
 service_id: 
     A103BG56
 key: 
-    paymentsprocessing_DevStudioApps/api/banking/paymentsprocessing_1.0.3_main.yaml
+    DevStudioApps/api/banking/paymentsprocessing_1.0.3_main.yaml
 version: 
     1.0.3
 name: 
