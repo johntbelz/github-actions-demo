@@ -1,7 +1,7 @@
 service_id: 
     B1093765
 key: 
-    DevStudioApps/api/loans/loanconsolidatoion_5.0.1_main.yaml
+    DevStudioApps/api/loans/loanconsolidatoion_main.yaml
 version: 
     5.0.1
 name: 
@@ -9,7 +9,7 @@ name:
 api_description: 
     Provides tools to assist with consolidating, analyzing, and provisding recommendatons for loans data.
 path: 
-    DevStudioApps/api/loans/loanconsolidatoion_5.0.1_main.yaml
+    DevStudioApps/api/loans/loanconsolidatoion_main.yaml
 parameters:
     loan_type: home
     loan_id: 0005
