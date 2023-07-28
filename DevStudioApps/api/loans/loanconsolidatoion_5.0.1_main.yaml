@@ -1,7 +1,7 @@
 service_id: 
     B1093765
 key: 
-    loanconsolidation_DevStudioApps/api/loans/loanconsolidatoion_5.0.1_main.yaml
+    DevStudioApps/api/loans/loanconsolidatoion_5.0.1_main.yaml
 version: 
     5.0.1
 name: 
