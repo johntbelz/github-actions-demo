@@ -7,7 +7,7 @@ version:
 name: 
     LoanConsolidation
 api_description: 
-    Provides tools to assist with consolidating, analyzing, and provisding recommendatons for loans data.
+    Provides tools to assist with consolidating, analyzing, and providing recommendatons for loans data.
 path: 
     DevStudioApps/api/loans/loanconsolidatoion_5.0.1_main.yaml
 parameters:
