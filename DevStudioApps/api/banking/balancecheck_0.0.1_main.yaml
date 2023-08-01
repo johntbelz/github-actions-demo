@@ -7,7 +7,7 @@ version:
 name: 
     BalanceCheck
 api_description: 
-    Balance check for a bank account.
+    Check a balance for a bank account.
 path: 
     DevStudioApps/api/banking/balancecheck_0.0.1_main.yaml
 parameters:
