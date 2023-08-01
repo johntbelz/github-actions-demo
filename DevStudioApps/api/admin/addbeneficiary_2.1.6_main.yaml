@@ -7,7 +7,7 @@ version:
 name: 
     AddBeneficiary
 api_description: 
-    Adds a new beneficiary to an account.
+    Add a new beneficiary to an account.
 path: 
     DevStudioApps/api/admin/addbeneficiary_2.1.6_main.yaml
 parameters:
