@@ -1,7 +1,7 @@
 service_id: 
     E0098365
 key: 
-    DevStudioApps/api/banking/balancecheck_main.yaml
+    DevStudioApps/api/banking/balancecheck_0.0.1_main.yaml
 version: 
     0.0.1
 name: 
@@ -9,7 +9,7 @@ name:
 api_description: 
     Balance check for a bank account.
 path: 
-    DevStudioApps/api/banking/balancecheck_main.yaml
+    DevStudioApps/api/banking/balancecheck_0.0.1_main.yaml
 parameters:
     institution_nm: bank_name
     institution_id: 0948230
