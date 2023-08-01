@@ -1,7 +1,7 @@
 service_id: 
     F8390098
 key: 
-    DevStudioApps/api/banking/transactionhistory_main.yaml
+    DevStudioApps/api/banking/transactionhistory_4.2.1_main.yaml
 version: 
     4.2.1
 name: 
@@ -9,7 +9,7 @@ name:
 api_description: 
     Fetch transaction history based on specified parameters.
 path: 
-    DevStudioApps/api/banking/transactionhistory_main.yaml
+    DevStudioApps/api/banking/transactionhistory_4.2.1_main.yaml
 parameters:
     institution_nm: bank_name
     institution_id: 548984204593
