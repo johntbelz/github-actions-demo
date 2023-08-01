@@ -7,7 +7,7 @@ version:
 name: 
     PaymentsProcessing
 api_description: 
-    Provides logic to assist with processing and storing payments from the institutions of your choice.
+    Provides logic to assist with processing and storing payments from the financial institutions of your choice.
 path: 
     DevStudioApps/api/banking/paymentsprocessing_1.0.3_main.yaml
 parameters:
